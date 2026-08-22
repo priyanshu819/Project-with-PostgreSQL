@@ -434,7 +434,68 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
                        -------------------------------------------------------------------------
 	                     SELECT ->  FROM -> WHERE -> GROUP BY -> HAVING -> ORDER -> LIMIT
 	                   -------------------------------------------------------------------------
-	
+	        TASK 1 ->  Count Total Employee
+			           SELECT COUNT(*) FROM student_details;
+ 
+ 
+			TASK 2 ->  Calculate Total scholership
+			           SELECT SUM(scholership) FROM student_details;
+ 
+			TASK 3 ->  Find AVG Scholership
+			           SELECT AVG(scholership) FROM student_details
+ 
+			TASK 4 ->  Dind Highest Scholersship
+			           SELECT MAX(scholership) FROM student_details
+ 
+			TASK 5 ->  Lowest Salary
+			           SELECT MIN(scholership) FROM student_details
+ 
+			TASK 6 ->  Find how many employe work in eahc department
+			           SELECT departments, COUNT(*) FROM employee GROUP BY departments
+ 
+			TASK 7 ->  Find AVG Salary of each Department
+			           SELECT departments ,AVG(salary) FROM employee GROUP BY departments
+ 
+			TASK 8 ->  Find HIGHest Salary of each departments
+			           SELECT departments, MAX(salary) FROM employee GROUP BY departments
+ 
+			TASK 9 ->  Find only that department which have more than 1 employee
+			           SELECT departments, COUNT(*) FROM employee GROUP BY departments HAVING COUNT(*)>1
+ 
+			TASK 10 -> Find only that departments which have more than 60000
+			           SELECT departments , AVG(salary) FROM employee GROUP BY departments HAVING AVG(salary)>60000
+
+			TASK 11 -> Find that department which have highest salary
+			           SELECT * FROM (SELECT departments , MAX(salary) FROM employee GROUP BY departments) 
+	                   WHERE max = (SELECT MAX(max) FROM (SELECT departments , MAX(salary) 
+					   FROM employee GROUP BY  departments))
+
+
+
+			TASK 12 -> Write one query which return thede things -> department, total employees, avg salary, highest saary, lowest sala
+			           SELECT 
+					         departments,
+							 COUNT(*) as "Total_Employee",
+							 AVG(salary) as "Average Salary",
+							 MAX(salary) as "Highest salary",
+							 MIN(salary) as "Lowest salary"
+					   FROM employee
+					   GROUP BY departments;
+
+
+           -----------------------
+			MINI CHALANGE  ->    find that two departments which have more avg salary, but that departments have more than 1 employee
+		   -----------------------
+
+		                SELECT 
+						      departments,
+							  AVG(salary) 
+						FROM employee
+						GROUP BY departments
+						HAVING COUNT(*)>1
+						ORDER BY avg DESC
+						LIMIT 2;
+					      
 							
 
 						  
