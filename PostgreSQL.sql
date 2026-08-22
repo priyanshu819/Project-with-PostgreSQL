@@ -254,6 +254,199 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
 
 			  -- Select Third Second 
 			  --SELECT * FROM employee ORDER BY  ID ASC OFFSET 10 LIMIT 5 ;
+
+
+----------------------------------
+-- Aggrigate Function
+----------------------------------
+/*
+ Aggrigate function -> it is method to find one calculated result from muliple rows
+
+ 1) COUNT() -> its count total records from tables [SELECT  COUNT(*) FROm employees;]
+
+ 2) SUM() -> find sum of all employee's salary [SELECT SUM(salary) as "Toal_salary" FROM employee]
+
+ 3) AVG() -> find avg value of a  column [SELECT AVG(salary) as "Avg_salary" FROM employee]
+
+ 4) MIN() -> Find The minimm data from the table [SELECT MIN(salary) as "Min_Salary" FROM employee] 
+
+ 5) MAX -> Find Largest value From THe table [SELECT MAX(salary) as "Highest_salary" FROM employee]
+
+ 6) MUTILPLE Aggrigate Function together
+                 SELECT 
+				     COUNT(*) AS "total-employee",
+					 SUM(salary) as "Toal_salary",
+					 AVG(salary) as "Avg_salary", 
+					 MIN(salary) as "Min_Salary",
+					 MAX(salary) as "Highest_salary"
+				 FROM employee;
+
+
+  *) DISTINCT -> to select only data once means remoove not repeat duplicate data
+  
+                 SELECT 
+				      DISTINCT branch
+				 FROM student_details
+
+
+  7) GROUP BY -> It is grouping same value 'rows and count'  base on  property[Attribute/column name] 
+                  Softwere Engineer  = 3
+				  Backend ENgineer = 5
+				  Frontend ENgineer = 7
+				  ..
+				  ..
+
+
+
+   8) MULTIPLE aggregate + GROPU BY -> 
+   
+                            SELECT
+							         departments,
+									 COUNT(*) AS "total-employee",
+					                 SUM(salary) as "Toal_salary",
+					                 AVG(salary) as "Avg_salary" ,
+					                 MIN(salary) as "Min_Salary",
+					                 MAX(salary) as "Highest_salary"
+				            FROM employee
+							GROUP BY departments;
+
+
+
+
+	9) WHERE + GROUP BY -> 
+
+	                      SELECT 
+						         departments,
+								 AVG(salary) as "average_slary"
+						  FROM employee
+						  WHERE departments = 'Backend Engineering'
+						  GROUP BY departments;
+
+
+
+	10) GROUP BY + ORDER BY -> 
+
+		                  SELECT 
+						         departments,
+								 AVG(salary) AS "avg_Salary"
+						  FROM employee
+						  GROUP BY departments
+						  ORDER BY avg_salary DESC;
+
+
+	11) SELECT HIGHEST SALARY PERSONS DATA  FROM TABLE-> 
+
+	                      SELECT * FROM employee
+						  WHERE salary = (SELECT MAX(salary) FROM employee) 
+
+
+
+    12) SELECT HIGHEST SALARY FROM ONE DEPARTMENT -> 
+
+				          SELECT * FROM employee
+                          WHERE salary=(SElECT MAX(salary) FROM (SELECT * FROM employee WHERE departments ='Java Development') );
+
+
+
+	13) HAVING -> havinf filter the groups  like (show only that department which have more than 2 employe)
+
+						   SELECT 
+							       departments,
+								   COUNT(*) as "total_employee"
+						    FROM employee
+							GROUP BY departments 
+							HAVING COUNT(*) >2;
+
+
+
+	14) WHERE vs HAVING -> 
+
+
+	                        -------------
+							-- WHERE    -> IT FIlter individual
+							-------------
+				            SELECT 
+							       *
+							FROM employee
+							WHERE salary >50000;
+
+							-------------
+							-- HAVING    -> IT FIlter By Group wise not individual
+							-------------
+				            SELECT 
+							       departments,AVG(salary) as "avarage_salary"
+							FROM employee
+							GROUP BY departments
+							HAVING avarage_salary >50000;
+
+
+
+
+
+	15) WHERE + GROUP + HAVING -> Find that branch which have more than 2 of count of active_student
+
+							SELECT  
+						             branch,
+							         COUNT(*)  
+							FROM student_details 
+							WHERE is_active=true
+							GROUP BY branch
+							HAVING COUNT(*)>2;
+								   
+
+
+
+   16) GROUP BY MULTIPLE COLUMNS ->  suppose department and scholership according grouping
+
+                            SELECT 
+							      branch,scholership,
+								  COUNT(*)
+							FROM student_details
+							GROUP BY branch,scholership;
+							
+ 
+	                            
+							
+	17) DISTINCT vs GROUP BY -> 							   
+
+							 -------------
+							-- DISTINCT    -> IT return value only at once
+							-------------
+				            SELECT 
+							       DISTINCT departments
+							FROM employee
+							
+
+							-------------
+							-- HAVING    -> IT FIlter By Group wise and give computational result
+							-------------
+				            SELECT 
+							       departments,AVG(salary) as "avarage_salary"
+							FROM employee
+							GROUP BY departments
+
+
+
+	---------------------
+	    ORDER TO WRITE 
+	---------------------
+
+                       -------------------------------------------------------------------------
+	                     SELECT ->  FROM -> WHERE -> GROUP BY -> HAVING -> ORDER -> LIMIT
+	                   -------------------------------------------------------------------------
+	
+							
+
+						  
+ */
+  
+							       
+							
+
+							
+  
+
+
 			 
 
 
