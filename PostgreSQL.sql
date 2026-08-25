@@ -447,7 +447,7 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
 			TASK 4 ->  Dind Highest Scholersship
 			           SELECT MAX(scholership) FROM student_details
  
-			TASK 5 ->  Lowest Salary
+			TASK 5 ->  Lowest Salary-
 			           SELECT MIN(scholership) FROM student_details
  
 			TASK 6 ->  Find how many employe work in eahc department
