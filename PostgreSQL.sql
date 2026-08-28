@@ -107,6 +107,10 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
 -- FOREIGN KEY (course_id)
 -- REFERENCES student_details(id)
 
+-- DELETE Foreign key
+-- ALTER table students
+-- DROP CONSTRAINT fk_student_course
+
 
 
 
@@ -495,6 +499,82 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
 						HAVING COUNT(*)>1
 						ORDER BY avg DESC
 						LIMIT 2;
+
+
+--------------------------------------------------------------------
+   JOINS  -> select multiple tables data at a time we use joins
+--------------------------------------------------------------------
+
+  Syntax ->                SELECT ..
+                           FROM tbale1
+						   JOIN table2
+						   ON table1.column=table2.column
+
+
+
+  1) INNER JOIN -> ineer join select only both matching records means intersection data.eg[its return only id 1,2,3]
+
+						   SELECT
+						         e.name, b.branch,b.semester, b.scholership 
+						   FROM students e
+						   INNER JOIN student_details b
+						   ON e.course_id=b.id;
+
+
+
+ 2)  LEFT JOIN ->   give all employes details unless they are in include or not in second column
+
+			               SELECT
+						         e.name, b.branch,b.semester, b.scholership 
+						   FROM students e
+						   LEFT JOIN student_details b
+						   ON e.course_id=b.id;
+
+
+ 3) RIGHT JOIN -> second columns all data if unless ther are available or not in first column
+ 
+                           SELECT
+						         e.name, b.branch,b.semester, b.scholership 
+						   FROM students e
+						   RIGHT JOIN student_details b
+						   ON e.course_id=b.id;
+
+
+
+  4) FULL OUTER JOIN -> select both tables recorde if matching then combine else null
+						  
+
+			               SELECT
+						         e.name, b.branch,b.semester, b.scholership 
+						   FROM students e
+						   FULL OUTER JOIN student_details b
+						   ON e.course_id=b.id;
+
+
+
+   5) CROSS JOIN -> Combine one row of first table to all row af second table
+
+                           SELECT
+						         e.name, b.branch,b.semester, b.scholership 
+						   FROM students e
+						   CROSS JOIN student_details b;
+						   
+
+   6) SELF JOIN -> join one table with itself.
+
+			               SELECT
+						         e.name, b.course_id
+						   FROM students e
+						   LEFT JOIN students b
+						   ON e.course_id=b.id;
+
+
+   7) NATURAL JOIN ->  if there r prrsent same column between two columns then natural joins itself but this is very dummy type
+
+                           SELECT
+						        *
+						   FROM students e
+						   NATURAL JOIN student_details b;
 					      
 							
 
