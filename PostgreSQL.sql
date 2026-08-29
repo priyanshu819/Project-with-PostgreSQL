@@ -575,6 +575,177 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
 						        *
 						   FROM students e
 						   NATURAL JOIN student_details b;
+
+
+
+	
+  8) JOIN + WHERE ->   TO see onlu Computer Secience student
+
+                        SELECT 
+						       e.name, d.branch
+					    FROM students e
+						INNER JOIN student_details d
+						ON e.course_id=d.id
+						WHERE branch='Computer Science and Engineering';
+
+
+	9) JOIN + ORDER BY -> Shoe the branch with highest SHCOLERSHIP
+
+						SELECT 
+						       e.name, d.branch,d.scholership
+					    FROM students e
+						INNER JOIN student_details d
+						ON e.course_id=d.id
+						ORDER BY d.scholership DESC;
+
+
+
+	10) JOIN + GROUP BY -> count total student in each branch
+
+						SELECT 
+						        d.branch,
+								COUNT(e.id)
+					    FROM students e
+						INNER JOIN student_details d
+						ON e.course_id=d.id
+						GROUP BY d.barnch;
+
+
+	11) COUNT(*) vs COUNT(e.id) -> we perform count(*) then it count null also and when we run count(e.id) then it run only e.id data 
+	                                  which is common
+
+
+
+    13) JOINS 3 Tables -> users , employee, departments
+	                      SELECT 
+						        u.email,
+								e.name,
+								d.department_name
+						  FROM user u
+						  JOIN employee e
+						  ON u.id=e.user_id
+						  JOIN department_name d
+						  ON e.department_id=d.id;
+
+
+
+    14) JOIN with ALiases -> 
+
+						  SELECT 
+						        d.branch,
+								e.name
+					    FROM students AS e
+						INNER JOIN student_details AS d
+						ON e.course_id=d.id
+						GROUP BY d.barnch;
+
+
+
+	15) TASK 1 -> All emloyee + department name 
+
+						SELECT 
+						       e.name,d.department_name
+						FROM c_employee e
+						INNER JOIN departments d
+						ON e.department_id=d.id;
+
+
+	16) TASK 2 -> LEFT JOIN all employeee + department name 
+
+	                   SELECT 
+						       e.name,d.department_name
+						FROM c_employee e
+						LEFT JOIN departments d
+						ON e.department_id=d.id;
+
+
+	17) TASK 3 -> RIGHT JOIN all department + employee
+
+	                    SELECT 
+						       e.name,d.department_name
+						FROM c_employee e
+						RIGHT JOIN departments d
+						ON e.department_id=d.id;
+
+
+	18) TASK 4 -> ALl record of both table 
+
+						SELECT 
+						       e.name,d.department_name
+						FROM c_employee e
+						FULL OUTER JOIN departments d
+						ON e.department_id=d.id;
+
+
+	 19) TASK 5 -> Employee Only It Departments
+
+					    SELECT 
+						       e.name , d.department_name
+					    FROM c_employee e
+						INNER JOIN departments d
+						ON e.department_id=d.id
+						WHERE d.department_name ='IT';
+
+
+	20) TASK 6 -> DEPARTMENT WISE EMPLOYEE  COUNT
+
+					    SELECT 
+						       d.department_name,
+							   COUNT(e.id)
+					    FROM c_employee e
+						RIGHT JOIN departments d
+						ON e.department_id=d.id
+						GROUP BY d.department_name;
+
+
+	21 TASK 7 -> SELECT that department which have 0 count
+
+	                     SELECT * FROM (SELECT 
+						       d.department_name,
+							   COUNT(e.id)
+					    FROM c_employee e
+						RIGHT  JOIN departments d
+						ON e.department_id=d.id
+						GROUP BY d.department_name
+						)
+						WHERE  count =0;
+
+
+   22) TASK 8 -> Employee name + salary+ department name + salary descending order
+
+                        SELECT 
+						      e.name, e.salary, d.department_name
+					    FROM c_employee e
+						INNER JOIN departments d
+						ON e.department_id=d.id
+						ORDER BY e.salary DESC;
+
+
+	23) TASK 9 -> department + employes count+ avg salalry, highest salalry
+
+					    SELECT 
+						       d.department_name,
+							   COUNT(e.id),
+							   AVG(e.salary),
+							   MAX(e.salary)
+					    FROM c_employee e
+						INNER JOIN departments d
+						ON e.department_id=d.id
+						GROUP BY d.department_name ;
+						
+
+	24) INTERVIEW CHALANGE -> find that department which avg employee slalry is more then 60000 and at leas two employee presemnt
+
+	                    
+						 SELECT 
+						       d.department_name,
+							   AVG(e.salary)
+					    FROM c_employee e
+						INNER JOIN departments d
+						ON e.department_id=d.id
+						GROUP BY d.department_name
+						HAVING COUNT(e.id)>2 AND AVG(e.salary)>60000;  
+
 					      
 							
 
