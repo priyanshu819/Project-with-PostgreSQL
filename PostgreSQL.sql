@@ -748,7 +748,265 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
 
 
 
-	
+	----------------------------
+	 CLASS 6 ->     SUBQUERY
+	----------------------------
+
+	1) Subquery -> it is auery structure in which one query write in another query
+	               SELECT 
+				         *
+				   FROM subquery
+				   WHERE salary > (SELECT AVG(salary) FROM subquery);
+
+
+	2) Types of Subquerieasc -> a) Scaler Subquery     b)Multi-row Subquery   c)Correlated Subquery
+
+
+
+	3) Scaler Subquery -> it returns only single value
+	               SELECT 
+				         AVG(salary)
+				   FROM subquery;
+				   
+
+	4) Multi-row-Subquery -> it returns multiple row
+	               SELECT 
+				         id
+				   FROM subquery
+				   WHERE department_id=1;
+
+
+	 5) Correlated Subquery -> learn within soon..
+
+
+
+	 6) IN  -> Check multiple values in side bracess, for eg- we want select employe from it or finance.
+	                SELECT * 
+					FROM subquery
+					WHERE department_id IN (1,3);
+					
+
+
+	7) IN + SUBQUERY ->  we select where condition through subquery
+	                SELECT 
+					      *
+					FROM subquery
+					WHERE department_id IN 
+					(SELECT id FROM sub_department WHERE department_name='Finance');
+
+
+
+	8) IN vs JOIN -> if we have to return releted data then -> join if membership/condn then -> in
+
+					-----
+					JOIN
+					-----
+					SELECT e.*
+					FROM subquery e
+					JOIN sub_department d
+					ON e.department_id=d.id
+					WHERE d.department_name='Finance';
+
+					----
+					IN
+					____
+
+					SELECT 
+					      *
+					FROM subquery
+					WHERE department_id IN 
+					(SELECT id FROM sub_department WHERE department_name='Finance');
+
+                    
+
+
+	9) NOT IN -> Use as a not condition meas select all employe exclude finance
+
+				    SELECT 
+					      *
+					FROM subquery
+					WHERE department_id IN 
+					(SELECT id FROM sub_department WHERE department_name='Finance');  
+
+
+
+
+	10) EXISTS -> its check that there are exist atleast one rwo from subquery??, it return in the form of true/False
+	              for applyng subquery we use (SELECT 1) it means that return i if true that condition.
+
+				  eg-> i want to fetch data from table subquery if that department is from department table
+
+				  SELECT 
+				         * 
+				  FROM subquery e
+				  WHERE EXISTS
+				  (SELECT 1 FROM sub_department d WHERE e.department_id=d.id)
+
+				  means that -> ftech all attribute data from tble 1 if subquery exist
+
+
+
+	11) NOT EXISTS -> find such that deparrtment in which there are no any emplloyee
+
+				  SELECT 
+				         * 
+				  FROM subquery e
+				  WHERE NOT EXISTS
+				  (SELECT 1 FROM sub_department d WHERE e.department_id=d.id)
+
+
+
+
+	12) EXISTS vs IN ->  IN: value in the list ?
+	                     EXISTS: does exist matching row ?
+
+
+
+	13) CORELATED SUBQUERY -> in this subquery inner subquery work as a loop,
+	                            each row of outer query inner query runs everytime and check
+
+								eg: we want to select that employe which salary is highest than that departments avg salary.
+				 
+				SELECT 
+				        e.name,
+						e.salary,
+						e.department_id
+				FROM subquery e
+				WHERE e.salary > (SELECT AVG(f.salary) FROM subquery f WHERE e.department_id=f.department_id );
+
+
+
+
+	14)  ANY -> Condition will be true with atleast one value
+	             eg: Select such employee whoosse salary is grated than any employee of IT Department
+
+				 SELECT 
+				       * 
+				 FROM subquery e
+				 WHERE e.salary > ANY(SELECT salary FROM subquery WHERE department_id=1);
+
+
+
+	15) ALL -> it select data when condition will bw true with each value
+	            eg: find it departments employee data which salary is grater than 60000
+				SELECT 
+				       *
+				FROM subquery e
+				WHERE e.salary > All(SELECT salary FROM subquery WHERE department_id=1);
+
+
+
+
+
+   16) SUBQUERY + AGGREGATE ->  Find such that departments whose avg salary is greter than Compnieas AVG Salry
+
+
+				SELECT 
+				       department_id,
+					   AVG(salary) as "avg_Salary"
+				FROM subquery
+				GROUP BY department_id
+				HAVING AVG(salary) > (SELECT AVG(salary) FROM subquery );
+
+
+
+	17) SUBQUERY IN FROM ->   Selctt that department which Slaary is highest from other Departments
+
+	             SELECT
+				        MAX(salary) 
+				 FROMSELECT * FROM (SELECT department_id,SUM(salary) as "salary" 
+                 FROM subquery GROUP BY department_id) 
+				 WHERE salary=(SELECT MAX(salary) FROM (SELECT department_id,SUM(salary) as "salary" 
+                 FROM subquery GROUP BY department_id) ); 
+
+
+
+
+    18) TASK 1 -> Select employess whose salary is greater than compnies salary
+
+				SELECT 
+				      *
+				FROM subquery
+				WHERE salary> (SELECT AVG(salary) from subquery);
+
+
+
+	19) TASK 2 -> Select that employee which hold maximum salary of the compny
+
+	           SELECT 
+			          * 
+			   FROM subquery
+			   WHERE salary=(SELECT MAX(salary) FROM subquery );
+
+
+	20) TASK 3 -> Find IT department employee through In + Subquery
+
+               SELECT 
+			          *
+			   FROM subquery
+			   WHERE department_id In (SELECT department_id FROM subquery WHERE department_id=1);
+
+
+	21) TASK 4 -> find such department_id which have atleast one employee
+
+               SELECT 
+			         *
+			   FROM subquery e
+			   WHERE EXISTS (SELECT 1 FROM sub_department d WHERE e.department_id =d.id)
+
+
+
+	22) TASK 5 -> Find such department which have no any employee
+
+	           SELECT 
+			         *
+			   FROM subquery e
+			   WHERE NOT EXISTS (SELECT 1 FROM sub_department d WHERE e.department_id =d.id);
+
+
+
+	23) TASK 6 -> Find Such Employe WHich salary is greter than avg salary of IT department sqalary
+
+			   SELECT 
+			        *
+				FROM subquery
+				WHERE salary> (SELECT AVG(salary) from subquery WHERE department_id=1);
+
+
+	24) TASK 7 -> Find Such department Which avg Slaalry is greter than compnieas avg salary
+
+	            SELECT 
+				       department_id,
+					   AVG(salary)
+				FROM subquery
+				GROUP BY department_id
+				HAVING AVG(salary) > (SELECT AVG(salary) FROM subquery);
+
+
+
+	25) TASK 8-> USE ANY KEYWORD and find employee which have salary greater than IT employee
+
+                SELECT 
+				       *
+				FROM subquery
+				WHERE salary >  ANY(SELECT salary FROM subquery WHERE department_id=1);
+
+
+
+	26) TASK 9 -> use ALL key word and fina tht aemployee which salary is greater than all IT student
+
+                SELECT 
+				       *
+				FROM subquery
+				WHERE salary >  ALL(SELECT salary FROM subquery WHERE department_id=1);
+
+
+	27) TASK 10 -> Find such that employee which  salary is greater than From their OWN departments AVG 
+
+	            SELECT 
+				      e.*
+			    FROM subquery e
+				WHERE e.salary > (SELECT AVG(f.salary ) FROM subquery f WHERE e.department_id=f.department_id);
 
 							
 
