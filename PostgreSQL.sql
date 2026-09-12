@@ -1008,6 +1008,10 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
 			    FROM subquery e
 				WHERE e.salary > (SELECT AVG(f.salary ) FROM subquery f WHERE e.department_id=f.department_id);
 
+	-----------------
+	 CLASSS 7 ->
+	----------------
+
 							
 
 						  
