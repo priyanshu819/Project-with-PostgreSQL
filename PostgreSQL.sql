@@ -1008,9 +1008,192 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
 			    FROM subquery e
 				WHERE e.salary > (SELECT AVG(f.salary ) FROM subquery f WHERE e.department_id=f.department_id);
 
-	-----------------
-	 CLASSS 7 ->
-	----------------
+	-----------------------------------------
+ CLASS 7 -> CTE [COMMON TABLE EXPRESSION]
+ -----------------------------------------
+
+   CTE -> its method to create temproroy table/result which use in same query after just like function/variable
+            -> CTE does not ccreate permanent table in datatbase.
+			-> iTS mediater part in a project to find some calculation .
+			-> if we have simple tble of marks and we have to find total_marks, Obtained, PErcentage then we find percentange first
+			         then we decide excelent or not. same we do in sql first we create a result then we run further query depends on
+					  that result.
+
+
+   SYNTAX ->         WITH cte_name AS(
+                          SELECT ....               
+                     )
+					 SELECT 
+					       *
+					 FROM cte_name;
+
+                     --------------------
+				   	    SIMPLE EXAMPLE
+					 --------------------
+					 WITH high_salary AS(
+                         SELECT 
+						       *
+						 FROM subquery
+						 WHERE salary>50000
+					 )
+					 SELECT 
+					        *
+					 FROM high_salary;
+
+
+  NOTE -> CTE available only in current Query Scopeeee..
+          means : cte availble only for  [SELECT * FROM high_salary;] this query
+
+
+
+  BENIFIT BY CTE ->  devide complecx query into logical steps
+
+          STEP 1-> FIND AVG SALARY OF EMPLOYEE
+		  STEP 2-> FIND THAT EMPLOYEE WHICH HAVE MORE THAN ASVG SALALRY
+		  STEP 3-> JOIN THAT EMPLLOYE WITH DEPARTMENT
+		  STEP 4-> SORT THE RESULT
+
+		            CTE 1
+					  |
+					CTE 2
+					  |
+				  FINAL QUERY
+
+
+
+   CTE + GROUP BY ->  Find AVG salary of each department. 
+
+					 WITH department_salary AS(
+                         SELECT 
+						       dpartment_id,
+							   AVG(salary)
+						 FROM subquery
+						 GROUP BY department_id
+					 )
+
+					 SELECT * FROM department_salary;
+
+
+
+   CTE + JOIN ->  show the department name and avg salary
+
+					 WITH department_salary AS(
+                         SELECT 
+						       department_id,
+							   AVG(salary) as "avg_salary"
+						 FROM subquery
+						 GROUP BY department_id
+					 )
+					 SELECT 
+					       d.department_name,
+						   e.avg_salary
+					 FROM department_salary AS e
+					 JOIN sub_department d
+					 ON e.department_id=d.id;
+
+
+
+   MULTIPLE CTE ->  more than one CTE in a single Query.
+
+					 WITH high_salary AS(
+                       SELECT 
+					         * 
+					   FROM subquery
+					   WHERE salary>50000
+					),
+					 employee_count AS( 
+					    SELECT 
+						      COUNT(*)
+						FROM high_salary
+					)
+					SELECT 
+					      *
+				    FROM employee_count;	
+
+
+                            ------------------
+                             CTE vs SUBQUERY
+						    ------------------
+				
+					SUBQUERY -> Subquery usually imbaded inside the query
+                     CTE      -> result in define in CTE
+					 
++-------------------------------------------------------------------
+	  THATS WHY CTE IS MORE READABLE IN COMPLEX QUERY.
+-------------------------------------------------------------------
+
+   RECURSIVE CTE -> QWE WILL LERN LETTER
+
+
+
+   TASK 1 -> High Salary>50000
+
+				   WITH high_Salary AS(
+                      SELECT * FROM subquery WHERE salary>50000
+				   )
+				   SELECT * FROM high_Salary;
+
+
+
+	TASK 2-> Avarage Salary of COmpany
+
+	               WITH avg_salary AS(
+                          SELECT department_id, AVG(salary) FROM subquery GROUP BY department_id
+				   )
+				   SELECT * FROM avg_salary;
+
+
+	TASK 3 -> AVOBE AVG > AVG SALARY
+	
+	              WITH avg_salary AS(
+                     SELECT AVG(salary) as "avg" FROM subquery
+				  )
+				  
+				  SELECT id,name,salary,department_id FROm subquery,avg_salary WHERE salary > avg_salary.avg;
+
+
+
+	TASK 4-> DEPARTMENT avrage salalry
+
+	             WITH avg_salary AS(
+                    SELECT department_id, AVG(salary) FROm subquery GROUP BY department_id
+				 )
+				 SELECT * FROM avg_salary;
+
+
+	TASK 5 -> DEPARTMENT NAME + AVERAGE
+
+	            WITH avg_salary AS(
+                        SELECT department_id, AVG(salary) FROM subquery GROUP BY department_id
+				)
+				SELECT d.department_name, e.avg 
+				FROM sub_department d
+				JOIN avg_salary e
+				ON d.id=e.department_id;
+
+
+
+	TASK 6 -> MULTIPLE CTE 1) Find high salary 2) count high salary employee 3) sho total high salary employee
+
+			   WITH high_salary AS(
+                     SELECT * FROM subquery WHERE Salary >50000
+			   ),
+			   employee_count AS(
+                      SELECT COUNT(*) FROM high_salary
+			   )
+			   SELECT * FROM employee_count;
+
+
+
+   CHALANGE -> find avg salaryof each department, and show only that department which have avg salary greater than compny avg salalry
+
+			    WITH depart_avg AS(
+                   SELECT department_id, AVG(salary) FROm subquery GROUP BY department_id
+			   ),
+			   company_avg AS(
+                   SELECT AVG(salary) as "c_avg" FROM subquery
+			   )
+			   SELECT e.department_id,e.avg FROM depart_avg e,company_avg f WHERE e.avg >f.c_avg;
 
 							
 
