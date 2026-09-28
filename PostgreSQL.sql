@@ -1202,6 +1202,7 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
 
 SELECT * FROM students;
 SELECT COUNT(*) FROM students;
+SELECT departments,COUNT(*) FROM students GROUP BY departments;
   
 							       
 							
