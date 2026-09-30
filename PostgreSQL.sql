@@ -1201,6 +1201,7 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
  */
 
 mjz
+ldnq
 							       
 							
 
