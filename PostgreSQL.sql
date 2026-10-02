@@ -1196,8 +1196,9 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
 			   SELECT e.department_id,e.avg FROM depart_avg e,company_avg f WHERE e.avg >f.c_avg;
 
 
+	
 			
-							
+
  */
 
 
