@@ -20,6 +20,7 @@
   SELECT name as "Name" ,age  as "Age" FROM students;
 */ 
 
+
  --------------------------
  -- PART 2- Data Types
  --------------------------
