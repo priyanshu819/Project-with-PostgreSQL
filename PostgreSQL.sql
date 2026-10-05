@@ -8,6 +8,7 @@
 	  age INTEGER NOT NULL
   )*/
 
+
   /*-- slect all data 
   SELECT * FROM students;
 
