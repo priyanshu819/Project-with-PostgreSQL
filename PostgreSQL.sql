@@ -26,7 +26,6 @@
  -- PART 2- Data Types
  --------------------------
 
- 
  /*
 
   1) Integer-> for whole number
