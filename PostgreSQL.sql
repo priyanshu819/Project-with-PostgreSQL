@@ -1,5 +1,4 @@
 
-
 ---------
  -- PART 1
  ----------
@@ -22,13 +21,11 @@
   --select only name and age 
   SELECT name as "Name" ,age  as "Age" FROM students;
 */ 
-
  --------------------------
  -- PART 2- Data Types
  --------------------------
 
  /*
-
   1) Integer-> for whole number
   2) BIGINT -> bahut bade intiger value ke liye for population
   3) DECIMAL/NUMERIC -> money/Prices values ke liye 
@@ -39,9 +36,7 @@
   8) TIMESTAMP -> Date + Time important for backend application
   9) UUID -> morden application me unique id ke liye 
   
- 
  */
-
  
 --------------------------
  -- PART 3- Constraints
@@ -59,8 +54,6 @@
 
  4) UNIQUE -> avoide the duplicate value, one item will insert only once at a time, its allow NOT NULL COnstraints this is besic 
                 def b/w unique key or primary key
-
-
  
  5) CHECK -> for apply condition eg-> age INTIGER CHECK (age>=18).
 
