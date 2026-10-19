@@ -56,7 +56,8 @@
 
  4) UNIQUE -> avoide the duplicate value, one item will insert only once at a time, its allow NOT NULL COnstraints this is besic 
                 def b/w unique key or primary key
-                    
+
+
  
  5) CHECK -> for apply condition eg-> age INTIGER CHECK (age>=18).
 
@@ -66,7 +67,6 @@
  
 
 */
-
 /*-- Create second Table as student_details 
 CREATE TABLE student_details(
     id  SERIAL PRIMARY KEY,
@@ -77,6 +77,7 @@ CREATE TABLE student_details(
 	is_active BOOLEAN DEFAULT TRUE,
 	addmition_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );*/
+
 
 
 
@@ -95,6 +96,7 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
 -- ALTER TABLE students ADD COLUMN course_id INT;
 
 
+
 -- -- Insert values into Student table Course Details
 -- UPDATE students SET course_id=1 WHERE id=1;
 -- UPDATE students SET course_id=2 WHERE id=2;
@@ -105,6 +107,7 @@ INSERT INTO student_details(branch,semester,roll_num,scholership,is_active) VALU
 -- ADD CONSTRAINT fk_student_course
 -- FOREIGN KEY (course_id)
 -- REFERENCES student_details(id)
+
 
 -- DELETE Foreign key
 -- ALTER table students
