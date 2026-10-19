@@ -17,6 +17,9 @@
   SELECT email  from students;
 
 
+
+
+
   --select only name and age 
   SELECT name as "Name" ,age  as "Age" FROM students;
 */ 
